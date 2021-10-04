@@ -16,7 +16,7 @@
 `docker-compose -f docker-compose.yml down`
 
 
-#### API 실행 순서
+#### API 실행 순서(Auth 기능은 없으므로, 로그인 API는 무시해도 됩니다.)
 회원 가입: 유저 가입 API 호출
 
 문서 목록 보기: 유저 로그인 API 호출 -> 문서 목록 조회 API 호출 (querystring으로 status 변경)
