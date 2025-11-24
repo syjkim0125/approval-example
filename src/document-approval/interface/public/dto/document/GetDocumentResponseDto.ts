@@ -6,6 +6,15 @@ interface Comment {
     createdAt: Date;
 }
 
+interface Approver {
+    id: string;
+    userId: string;
+    documentId: string;
+    approvalOrder: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export class GetDocumentResponseDto {
     id: string;
     title: string;
@@ -14,6 +23,7 @@ export class GetDocumentResponseDto {
     status: string;
     currentApprovalOrder: number;
     comments: Comment[];
+    approvers: Approver[];
     createdAt: Date;
     updatedAt: Date;
 }

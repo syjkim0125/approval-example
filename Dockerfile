@@ -20,6 +20,9 @@ FROM node:18-alpine AS production
 
 WORKDIR /app
 
+# Install jq, curl, mysql-client for test scripts
+RUN apk add --no-cache jq curl bash mysql-client
+
 # Copy package files
 COPY package*.json ./
 
@@ -28,6 +31,10 @@ RUN npm ci --only=production
 
 # Copy built application from builder
 COPY --from=builder /app/dist ./dist
+
+# Copy test scripts
+COPY scripts /scripts
+RUN chmod +x /scripts/*.sh
 
 # Expose port
 EXPOSE 3000

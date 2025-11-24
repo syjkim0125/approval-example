@@ -4,8 +4,8 @@
 
 포스트맨 예시 API : [포스트맨 예시 문서](https://documenter.getpostman.com/view/7174063/2sB3dHWYQW)
 
-- 클럽하우스 관련 내용은 팀원으로 가입해야만 볼 수 있습니다. 초대 링크를 첨부드립니다.
-  ([클럽하우스 초대 링크](https://app.shortcut.com/invite-link/613859d9-e723-4038-b63c-80decb924baa))
+- Shortcut 관련 내용은 팀원으로 가입해야만 볼 수 있습니다. 초대 링크를 첨부드립니다.
+  ([Shortcut 초대 링크](https://app.shortcut.com/invite-link/613859d9-e723-4038-b63c-80decb924baa))
 
 #### 환경 세팅 커맨드(docker와 docker-compose가 설치되어있어야 합니다.)
 
@@ -27,12 +27,50 @@
 
 `show tables;`
 
-#### API 실행 순서(Auth 기능은 없으므로, 로그인 API는 무시해도 됩니다.)
+#### 자동 테스트 스크립트
 
-회원 가입: 유저 가입 API 호출
+Docker 컨테이너 내부에서 API를 자동으로 테스트할 수 있는 셸 스크립트를 제공합니다.
 
-문서 목록 보기: 유저 로그인 API 호출 -> 문서 목록 조회 API 호출 (querystring으로 status 변경)
+**전체 플로우 자동 테스트**
 
-결재 신청: 유저 로그인 API 호출 -> 문서 목록 조회 API 호출 -> 유저 목록 조회 API 호출 -> 결재 신청 API 호출
+```bash
+docker exec approval-app /scripts/test-all.sh
+```
 
-문서 결재: 유저 로그인 API 호출 -> 문서 목록 조회 API 호출 -> 문서 조회 API 호출 -> 결재 API 호출
+**개별 테스트 실행**
+
+```bash
+# 1. 유저 API 테스트 (회원가입 2명 → 로그인 → 유저 목록 조회)
+docker exec approval-app /scripts/test-user-api.sh
+
+# 2. 결재 플로우 테스트 (문서 목록 조회 → 결재 신청 → 결재 처리 → 상태 확인)
+docker exec approval-app /scripts/test-approval-flow.sh
+```
+
+**참고**: 테스트 스크립트는 Docker 이미지 빌드 시 자동으로 포함되며, `jq`와 `curl`이 사전 설치되어 있습니다.
+
+#### API 실행 순서 (수동 테스트)
+
+**1. 유저 관련 API**
+
+- 유저 가입 (2명) → 유저 목록 조회 → 유저 로그인
+
+**2. 결재 서비스 API**
+
+- 문서 목록 조회(0건) → 결재 신청 → 문서 목록 조회(1건, status: ongoing) → 결재 처리 → 문서 조회(1건, status: approved/rejected)
+
+#### 예외 처리
+
+모든 예외 메시지는 `src/constant/exception.ts`에 정의되어 있습니다:
+
+```typescript
+- DOCUMENT_NOT_FOUND: 'Document not found'
+- APPROVER_NOT_FOUND: 'Approver not found'
+- USER_NOT_FOUND: 'User not found'
+- INVALID_USER: 'Invalid user'
+- DOCUMENT_STATUS_IS_NOT_ON_GOING: 'Document status is not on going'
+- APPROVAL_STATUS_CANNOT_BE_ON_GOING: 'Approval status cannot be on going'
+- APPROVER_IS_NOT_CURRENT_APPROVAL_ORDER: 'approver is not current approval order'
+- INVALID_PASSWORD: 'Invalid password'
+- USER_ALREADY_EXIST: 'User already exist'
+```

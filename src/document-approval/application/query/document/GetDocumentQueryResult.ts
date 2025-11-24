@@ -10,6 +10,15 @@ interface Comment {
     createdAt: Date;
 }
 
+interface Approver {
+    id: string;
+    userId: string;
+    documentId: string;
+    approvalOrder: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export class GetDocumentQueryResult implements IQueryResult {
     id: string;
     title: string;
@@ -18,6 +27,7 @@ export class GetDocumentQueryResult implements IQueryResult {
     status: DocumentStatus;
     currentApprovalOrder: number;
     comments: Comment[];
+    approvers: Approver[];
     createdAt: Date;
     updatedAt: Date;
 }

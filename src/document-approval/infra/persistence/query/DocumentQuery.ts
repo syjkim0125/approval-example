@@ -14,7 +14,15 @@ import { IDocumentQuery, DocumentListView, DocumentView } from 'src/document-app
 export class DocumentQuery implements IDocumentQuery {
     public async findById(id: string): Promise<DocumentView | null> {
         const document = await getRepository(DocumentEntity).findOne({ where: { id } });
-        const comments = await getRepository(CommentEntity).find({ where: { documentId: id } });
+        if (!document) return null;
+
+        const [comments, approvers] = await Promise.all([
+            getRepository(CommentEntity).find({ where: { documentId: id } }),
+            getRepository(ApproverEntity).find({
+                where: { documentId: id },
+                order: { approvalOrder: 'ASC' },
+            })
+        ]);
 
         return {
             id: document.id,
@@ -24,6 +32,7 @@ export class DocumentQuery implements IDocumentQuery {
             status: document.status,
             currentApprovalOrder: document.currentApprovalOrder,
             comments,
+            approvers,
             createdAt: document.createdAt,
             updatedAt: document.updatedAt
         }

@@ -17,6 +17,15 @@ interface Comment {
     createdAt: Date;
 }
 
+interface Approver {
+    id: string;
+    userId: string;
+    documentId: string;
+    approvalOrder: number;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
 export interface DocumentView {
     id: string;
     title: string;
@@ -25,6 +34,7 @@ export interface DocumentView {
     status: DocumentStatus;
     currentApprovalOrder: number;
     comments: Comment[];
+    approvers: Approver[];
     createdAt: Date;
     updatedAt: Date;
 }
