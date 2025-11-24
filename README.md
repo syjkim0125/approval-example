@@ -9,15 +9,23 @@
 
 #### 환경 세팅 커맨드(docker와 docker-compose가 설치되어있어야 합니다.)
 
-1. `npm install`
-2. `npm run build`
-3. `docker-compose -f docker-compose.yml up`
+1. `git clone https://github.com/syjkim0125/approval-example.git`
+2. `docker compose build`
+3. `docker compose up -d`
 
 실행하고 난 후, API를 호출하면 됩니다.
 
 #### 종료 커맨드
 
-`docker-compose -f docker-compose.yml down`
+`docker compose down -v`
+
+#### Database 접속 커맨드
+
+`docker exec -it approval-mysql mysql -u root -ptest approvalservice`
+
+`use approvalservice;`
+
+`show tables;`
 
 #### API 실행 순서(Auth 기능은 없으므로, 로그인 API는 무시해도 됩니다.)
 
