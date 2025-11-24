@@ -1,7 +1,56 @@
+# Dependencies
 node_modules
-.vscode
-.gitignore
-Dockerfile
-docker-compose.yml
+npm-debug.log
+
+# Build output
 dist
-*.yaml
+build
+*.tsbuildinfo
+
+# Testing
+coverage
+.nyc_output
+
+# Environment
+.env.local
+.env.*.local
+*.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Docker
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Documentation
+README.md
+CHANGELOG.md
+LICENSE
+*.md
+
+# Logs
+logs
+*.log
+
+# Database
+*.sql
+*.sqlite
+
+# Temporary
+tmp
+temp

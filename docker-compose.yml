@@ -1,39 +1,76 @@
-version: "3.8"
+version: '3.8'
 
 services:
+  database:
+    platform: linux/amd64
+    image: mysql:5.7
+    container_name: approval-mysql
+    restart: always
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'mysqladmin',
+          'ping',
+          '-h',
+          'localhost',
+          '-u',
+          'root',
+          '-p${MYSQL_ROOT_PASSWORD}',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - approval-network
+
+  app:
+    container_name: approval-app
+    build:
+      context: .
+      target: production
+      dockerfile: ./Dockerfile
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_HOST: database
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      NODE_ENV: production
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+    networks:
+      - approval-network
+
   proxy:
     image: nginx:alpine
+    container_name: approval-nginx
     restart: always
     ports:
-      - 80:80
-    links:
-      - dev
+      - '80:80'
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app
     command: [nginx-debug, '-g', 'daemon off;']
+    networks:
+      - approval-network
 
-  dev:
-    image: document-approval
-    build:
-        context: .
-        target: development
-        dockerfile: ./Dockerfile
-    ports:
-      - 3000:3000
-    env_file:
-      - .env
-    links:
-      - database
-    volumes:
-      - ./:/app
-    restart: always
+networks:
+  approval-network:
+    driver: bridge
 
-  database:
-    image: mysql:5.7
-    restart: always
-    ports:
-      - 3306:3306
-    env_file:
-      - .env
-    volumes:
-      - ~/database/document-approval:/var/lib/mysql
+volumes:
+  mysql-data:
+    driver: local
