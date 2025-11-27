@@ -2,6 +2,12 @@
 
 자세한 내용과 일정은 [[문서 결재 전략적 설계](https://conscious-newsprint-15e.notion.site/0683eabd64584cb795d5cc1afcf946e2)] 및 [[Shortcut 이터레이션](https://app.shortcut.com/joshuatest/iterations)]를 참고하세요.
 
+Iteration Example Image
+
+
+<img width="300" height="450" alt="스크린샷 2025-11-27 오후 7 19 34" src="https://github.com/user-attachments/assets/8e85b969-7082-40ca-8c75-4d741523228d" /> <img width="450" height="500" alt="스크린샷 2025-11-27 오후 7 19 45" src="https://github.com/user-attachments/assets/42abe5f0-ab7d-48e2-b64a-196cbc9304ee" />
+
+
 포스트맨 예시 API : [포스트맨 예시 문서](https://documenter.getpostman.com/view/7174063/2sB3dHWYQW)
 
 - Shortcut 관련 내용은 팀원으로 가입해야만 볼 수 있습니다. 초대 링크를 첨부드립니다.
