@@ -25,8 +25,6 @@
 
 `use approvalservice;`
 
-`show tables;`
-
 #### 자동 테스트 스크립트
 
 Docker 컨테이너 내부에서 API를 자동으로 테스트할 수 있는 셸 스크립트를 제공합니다.
