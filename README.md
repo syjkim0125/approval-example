@@ -1,6 +1,6 @@
 예시용 결재 서비스입니다.
 
-자세한 내용과 일정은 [[문서 결재 전략적 설계](https://conscious-newsprint-15e.notion.site/0683eabd64584cb795d5cc1afcf946e2)] 및 [[클럽하우스 이터레이션](https://app.shortcut.com/joshuatest/iterations)]를 참고하세요.
+자세한 내용과 일정은 [[문서 결재 전략적 설계](https://conscious-newsprint-15e.notion.site/0683eabd64584cb795d5cc1afcf946e2)] 및 [[Shortcut 이터레이션](https://app.shortcut.com/joshuatest/iterations)]를 참고하세요.
 
 포스트맨 예시 API : [포스트맨 예시 문서](https://documenter.getpostman.com/view/7174063/2sB3dHWYQW)
 
