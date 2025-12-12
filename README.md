@@ -7,7 +7,7 @@ This is a small internal-style document approval service:
 - **Development Focus**: Requirements → Domain Modeling → API Design → Implementation.
 
 For detailed information and schedules, please refer to:
-- [[Document Approval Strategic Design](https://conscious-newsprint-15e.notion.site/0683eabd64584cb795d5cc1afcf946e2)]
+- [[Document Approval Strategic Design](https://deep-bluebell-928.notion.site/Document-Approval-Service-2c7ec9ac4c6480e8b0c4f532191a0c93)]
 - [[Shortcut Iterations](https://app.shortcut.com/joshuatest/iterations)]
 
 **Iteration Example Images:**
